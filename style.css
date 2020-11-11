@@ -1,23 +1,87 @@
 body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+	color: #383838;
+	font-size: 1.4rem;
+	line-height: 1.6;
+	max-width: 1080px;
+	background-color: #35363A;
+	margin: 0 auto;
+}
+
+main {
+    background-color: white;
+    text-align: center;
+    height: 100%;
+    display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+.container {
+	margin-bottom: 18%;
+}
+.title {
+    font-size: 190%;
+}
+.btn {
+	text-decoration: none;
+    display: inline-block;
+    width: 245px;
+    padding: 2% 0;
+    border-radius: 47px;
+    margin: 10% 68px;
+    color: white;
+}
+.left {
+	background-color: #2D5495;
+}
+.right {
+	background-color: #53833A;
+}
+.mail_main {
+    background-color: white;
+    height: 100%;
+}
+.top {
+	background-color: #3F4042;
+	text-align: left;
+	width: 100%;
+	color: white;
+	padding-left: 3%;
+}
+*:focus {
+outline: none;
+}
+.mail {
+	background-color: red;
+
+}
+.mail >input {
+	border: none;
+	width: 90%;
+}
+.recieve_adress {
+	border-bottom: 1px solid black;
+	margin: 0 10px;
+}
+.send_adress {
+	border-bottom: 1px solid black;
+	margin: 10px 10px;
+}
+.mailbody {
+	
+}
+::placeholder {
+  font-size: 20px;
+}
+/*
+body {
 	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
 	color: #383838;
 	font-size: 62.5%;
 	font-size: 1.4rem;
 	line-height: 1.6;
-	
+	max-width: 1080px;
 }
 .main {
 	width: 80%;
-}
-span {
-	font-weight: bold;
-}
-.input-submit {
-	margin-top: 1%;
-}
-.title {
-	font-size: 2.0vw;
-}
-button {
-	margin-right: 1%;
 }
