@@ -14,7 +14,7 @@
         <div class="container">
             <p class="title">メール配信システム</p> 
             <a href="index.php" class="btn left">メールを送信</a>
-            <a href="reserve.php" class="btn right">送信予定</a>
+            <a href="list.php" class="btn right">送信予定</a>
         </div>  
     </main>	  
 </body>

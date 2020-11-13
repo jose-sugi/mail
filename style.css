@@ -38,16 +38,25 @@ main {
 .right {
 	background-color: #53833A;
 }
+/*ここからindex.php*/
 .mail_main {
     background-color: white;
     height: 100%;
+    position: relative;
 }
 .top {
 	background-color: #3F4042;
 	text-align: left;
-	width: 100%;
+	width: 97%;
 	color: white;
 	padding-left: 3%;
+}
+.batsu {
+	position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 4%;
+    height: 3%;
 }
 *:focus {
 	outline: none;
@@ -90,6 +99,29 @@ main {
 }
 .mail_date >input {
 	height: 40px;
+}
+.mail_bottom1 {
+	background-color: ; 
+	width: 30%; 
+	margin-left: 1%;
+}
+.mail_bottom2 {
+	background-color: ;  
+	width: 50%;
+}
+.mail_bottom3 {
+	width: 20%; 
+	text-align: right;
+}
+.mail_bottom3 >input {
+	width: 75%;
+    margin-right: 9%;
+    padding: 3% 0;
+    font-size: 1em;
+    background-color: #0D5BB8;
+    border: none;
+    border-radius: 16px;
+    color: white;
 }
 ::placeholder {
   font-size: 20px;
