@@ -12,8 +12,8 @@
 <body>
     <main>
         <div class="container">
-            <p class="title">メール配信システム</p> 
-            <a href="index.php" class="btn left">メールを送信</a>
+            <p class="title"><span>メール配信システム</span></p> 
+            <a href="index.php" class="btn left">新規メール作成</a>
             <a href="list.php" class="btn right">送信予定</a>
         </div>  
     </main>	  

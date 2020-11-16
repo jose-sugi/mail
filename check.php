@@ -44,7 +44,7 @@
     $today = date("Y/m/d");
 
     ?>
-    <div class="mail_main">
+    <div class="mail_main maincolor">
         <p class="top">送信予定メール確認</p>
         <button onclick="history.back()" class="batsu">✕</button>
         <!-- 入力データをanswer.phpに送信 -->
@@ -58,12 +58,14 @@
         <div class="mail mailbody">
             <p>本文：<?php echo $text[0]; ?></p>
         </div>
-        <div class="mail_date">
-            <p>送信予定時間：<?php echo $date[0]; ?></p>
-            <div class="mail_bottom3">
+        <form action="start.php">
+        <div class="mail_date bottom">
+            <p>送信予定：<?php echo $date[0]; ?></p>
+            <div class="mail_bottom3 button">
                 <input type="submit" value="削除">
             </div>
         </div>
+        </form>
     </div>
 
 

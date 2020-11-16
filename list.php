@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <main>
+  <div class="main_list">
     <?php
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
@@ -41,6 +41,8 @@
 
 
     ?>
+    <p class="list_top">送信予定メール　一覧</p>
+    <p class="li">宛先　　件名　　予定日時</p>
 
     <!--取り出したデータをaタグで一覧表示させ、それぞれにidの値を持たせる-->
     <?php $n = 0; ?>
@@ -52,15 +54,18 @@
         } ?>
 
         <form name="<?php echo 'form' . $n; ?>" method="POST" action="check.php">
-          <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><?php echo $adressb[$i] . "　" . $subj[$i] . "　" . $date[$i]; ?></a></li>
+          <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><?php echo $adressb[$i] . "　　" . $subj[$i] . "　　" . $date[$i]; ?></a></li>
           <input type="hidden" name="id" value="<?php echo $id[$i]; ?>">
           <?php $n++; ?>
         </form>
       <?php endfor; ?>
     </ul>
-    <a href="start.php">前の画面</a>
-    <a href="list.php">メール送信</a>
-  </main>
+    <div class="mail_bottom">
+      <a href="start.php" class="btn list back">← 前の画面</a>
+      <a href="index.php" class="btn list left">新規メール作成</a>
+    </div>
+    
+  </div>
 </body>
 
 </html>

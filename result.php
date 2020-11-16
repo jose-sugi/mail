@@ -13,7 +13,7 @@
 <body>
   <main>
     <div class="container">
-      <p class="title">送信完了</p>
+      <p class="title send"><span>送信完了</span></p>
       <a href="index.php" class="btn left">メールを送信</a>
       <a href="list.php" class="btn right">送信予定</a>
     </div>
