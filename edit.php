@@ -114,6 +114,7 @@
                             <div id="date_rep" class="date_rep"><!-- ラジオボタンで「繰り返し予約」を選択したときに表示 -->
                                 <label>送信開始日　:</label><input type="date" name="rep_yes_date" id="rep_yes_date" min="<?php echo $today; ?>" onChange="status2(event)">
                             </div>
+                            <input type="hidden" name="id" value="<?php echo $id[0];?>">
                             <input type="hidden" name="upd" value="yes">
                             <input type="submit" value="変更" onclick="return myCheck_rep();">
                         </div>
