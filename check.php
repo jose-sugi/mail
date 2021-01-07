@@ -1,4 +1,13 @@
-<!DOCTYPE>
+  <?php 
+    /*
+    ******************************************************************************
+    メール予約内容確認画面
+    2020/12/09
+    ******************************************************************************
+    */
+   ?>
+    
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -12,19 +21,14 @@
 
 <body>
     <?php
+    include(dirname(__FILE__).'/variable.php');//変数ファイルの読み込み
+    include(dirname(__FILE__) . '/function.php');//関数ファイルの読み込み
     $id = $_POST['id'];
     ?>
     <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
-
-    $dsn = 'mysql:host=localhost;dbname=mailtest';
-    $user = 'root';
-    $password = 'root';
-
-    try {
+    try {//メール一覧で選んだメールのidを基に、メール内容を取得
         $db = new PDO($dsn, $user, $password);
-        $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); // それぞれの単一文で自動コミットするかどうか。
+        $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); 
         $sql = "SELECT * from mail WHERE id = " . $id . " ";
         $stmt = $db->prepare($sql);
         $stmt->execute();
@@ -33,24 +37,49 @@
     }
 
     // SQLより取り出したデータを配列に格納
-    $data = $stmt->fetchAll();
-    $id = array_column($data, 'id');
-    $adressa = array_column($data, 'adressa');
-    $adressb = array_column($data, 'adressb');
-    $subj = array_column($data, 'subject');
-    $text = array_column($data, 'text');
-    $date = array_column($data, 'date');
-
-    $today = date("Y/m/d");
+          $data = $stmt->fetchAll();
+          $id = array_column($data, 'id');
+          $adressa = array_column($data, 'adressa');
+          $adressb = array_column($data, 'adressb');
+          $subj = array_column($data, 'subject');
+          $text = array_column($data, 'text');
+          $date = array_column($data, 'date');
+          $period = array_column($data, 'period');
+          $week = array_column($data, 'week');
 
     ?>
+    <?php 
+                $week_array = [//数字で曜日を表示させるための配列
+                      '日', //1
+                      '月', //2
+                      '火', //3
+                      '水', //4
+                      '木', //5
+                      '金', //6
+                      '土', //7
+                    ];
+                
+
+            
+                    //送信時間を表示するために場合分け
+                if ($period[0] == null) {//「繰り返し送信」をしていないとき、「◯年◯月◯日」
+                    $list_date = date('Y年n月j日',  strtotime($date[0]));
+                } else if ($period[0] == "Y") {//「毎年」で繰り返し予約しているとき、「毎年　◯月◯日」
+                    $list_date = "毎年".date('n月j日',  strtotime($date[0]));
+                } else if ($period[0] == "M") {//「毎月」で繰り返し予約しているとき、「毎月　◯日」
+                    $list_date = "毎月".substr($date[0],8,2)."日";
+                } else if ($period[0] == "W") {//「毎週」で繰り返し予約しているとき、「毎週　◯曜日」
+                    $list_date = "毎週".$week_array[$week[0] - 1]."曜日";//1〜７で日曜日〜土曜日
+                } else if ($period[0] == "D") {//「毎日」で繰り返し予約しているとき、「毎日」
+                    $list_date = "毎日";
+                }
+                
+         ?>
     <div class="mail_main maincolor">
         <p class="top">送信予定メール確認</p>
         <button onclick="history.back()" class="batsu">✕</button>
-        <!-- 入力データをanswer.phpに送信 -->
-
         <div class="mail recieve_adress">
-            <p>宛先：<?php echo $adressb[0]; ?></p>
+            <p>宛先：<?php echo $adressb[0];?></p>
         </div>
         <div class="mail send_adress">
             <p>件名：<?php echo $subj[0]; ?></p>
@@ -58,18 +87,23 @@
         <div class="mail mailbody">
             <p>本文：<?php echo $text[0]; ?></p>
         </div>
-        <form action="start.php">
         <div class="mail_date bottom">
-            <p>送信予定：<?php echo $date[0]; ?></p>
-            <div class="mail_bottom3 button">
-                <input type="submit" value="削除">
-            </div>
+            <p>送信予定時間：<?php echo $list_date."　".$time_cron; ?></p>
+            <?php if($functionFlag_edit): //「変更・削除」機能のフラグがfalseのとき「変更」ボタンと「削除」ボタンを表示しない?>
+                <div class="mail_bottom3 button">
+                    <form action="result.php" name="form1" method="POST">
+                        <input type="hidden" name="delete" value="yes">
+                        <input type="hidden" name="id" value="<?php echo $id[0]; ?>">
+                        <input type="submit" class="delete" value="削除" onclick="return del();">
+                    </form>
+                    <form action="edit.php" name="form1" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $id[0]; ?>">
+                        <input type="submit" class="edit" value="編集" onclick="return edi();">
+                    </form>
+                </div>
+            <?php endif; ?>
         </div>
-        </form>
     </div>
-
-
-    </main>
 </body>
 
 </html>
