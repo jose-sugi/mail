@@ -78,10 +78,10 @@
     <div class="mail_main maincolor">
         <p class="top">送信予定メール確認</p>
         <button onclick="history.back()" class="batsu">✕</button>
-        <div class="mail recieve_adress">
+        <div class="mail send_adress">
             <p>宛先：<?php echo $adressb[0];?></p>
         </div>
-        <div class="mail send_adress">
+        <div class="mail subject">
             <p>件名：<?php echo $subj[0]; ?></p>
         </div>
         <div class="mail mailbody">

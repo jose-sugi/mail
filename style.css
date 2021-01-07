@@ -132,6 +132,11 @@ input:-webkit-autofill {
 	margin: 10px 10px;
 }
 
+.subject{
+	border-bottom: 1px solid #a5a4a4;
+	margin: 10px 10px;
+}
+
 .mailbody {
 	margin: 10px 10px;
 	position: relative;
@@ -250,12 +255,20 @@ input:-webkit-autofill {
 .list_ad {
 	display: inline-block;
     width: 50%;
-    font-size: 20px;
+	font-size: 20px;
+	/* 件名の表示省略 */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .list_subj {
 	display: inline-block;
-    width: 27%;
-    font-size: 20px;
+    width: 20%;
+	font-size: 20px;
+	/* 件名の表示省略 */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 ul {
 	margin-left: 1%;
