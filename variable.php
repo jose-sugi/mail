@@ -19,9 +19,9 @@
     $functionFlag_edit = false;
     $functionFlag_repeat = true;
 
-    $dsn = 'mysql:dbname=LAA1192052-sugisawa01;host=mysql145.phy.lolipop.lan;charset=utf8';//MySQLのデータソース名
-    $user = 'LAA1192052';//ユーザー名
-    $password = 'AcroLoliPass2020';//パスワード
+    $dsn = 'mysql:dbname=LAA1192052-sugisawa01;host=mysql145.phy.lolipop.lan;charset=utf8'; //MySQLのデータソース名
+    $user = 'LAA1192052'; //ユーザー名
+    $password = 'AcroLoliPass2020'; //パスワード
 
     date_default_timezone_set('Asia/Tokyo');
     $today = date('Y-m-d');//今日の日付
