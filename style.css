@@ -250,12 +250,20 @@ input:-webkit-autofill {
 .list_ad {
 	display: inline-block;
     width: 50%;
-    font-size: 20px;
+	font-size: 20px;
+	/* 件名の表示省略 0107服部*/
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .list_subj {
 	display: inline-block;
-    width: 27%;
-    font-size: 20px;
+    width: 20%;
+	font-size: 20px;
+	/* 件名の表示省略 0107服部*/
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 ul {
 	margin-left: 1%;
