@@ -132,12 +132,6 @@ input:-webkit-autofill {
 	margin: 10px 10px;
 }
 
-/* 0108 追加 */
-.subject{
-	border-bottom: 1px solid #a5a4a4;
-	margin: 10px 10px;
-}
-
 .mailbody {
 	margin: 10px 10px;
 	position: relative;
