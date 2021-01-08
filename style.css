@@ -256,7 +256,7 @@ input:-webkit-autofill {
 	display: inline-block;
     width: 50%;
 	font-size: 20px;
-	/* 件名の表示省略 */
+	/* 件名の表示省略 0107服部*/
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -265,7 +265,7 @@ input:-webkit-autofill {
 	display: inline-block;
     width: 20%;
 	font-size: 20px;
-	/* 件名の表示省略 */
+	/* 件名の表示省略 0107服部*/
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
