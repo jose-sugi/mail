@@ -41,6 +41,7 @@
           $id = array_column($data, 'id');
           $adressa = array_column($data, 'adressa');
           $adressb = array_column($data, 'adressb');
+          $address_bcc = array_column($data, 'address_bcc');
           $subj = array_column($data, 'subject');
           $text = array_column($data, 'text');
           $date = array_column($data, 'date');
@@ -78,10 +79,13 @@
     <div class="mail_main maincolor">
         <p class="top">送信予定メール確認</p>
         <button onclick="history.back()" class="batsu">✕</button>
-        <div class="receive_adress">
+        <div class="mail recieve_adress">
             <p>宛先：<?php echo $adressb[0];?></p>
+            <?php if ($address_bcc !== null) :?>
+              <p>BCC：<?php echo $address_bcc[0]; ?></p>
+            <?php endif; ?>
         </div>
-        <div class="send_adress">
+        <div class="mail send_adress">
             <p>件名：<?php echo $subj[0]; ?></p>
         </div>
         <div class="mail mailbody">

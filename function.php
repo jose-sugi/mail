@@ -19,7 +19,7 @@
 
  ?>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
  <script type="text/javascript">
         function myCheck(){//「送信」ボタンを押下したときポップアップ表示で確認するための関数（繰り返し機能offのとき）
             if(document.form1.specify[0].checked){ //ラジオボタン「日付指定なし」が選択されているとき表示
@@ -31,6 +31,7 @@
             }
     }
         function myCheck_rep() {//「送信」ボタンを押下したときポップアップ表示で確認するための関数（繰り返し機能onのとき）
+
             if (document.form1["rep"][0].checked) {
                 var select = confirm("送信予約しますか？");//ラジオボタン「日時指定」で送信予約したとき
                 return select;
@@ -39,7 +40,19 @@
                 return select;
             }
         }
+        function check_count() {
+            letter_1 = <?php echo $max_adress_send; ?>;//関数ファイルで設定した「送信先メールアドレス」の最大文字数
+            letter_2 = count;//フォームに入力した送信先メールアドレスに含まれる、カンマ「,」の数
+            letter_3 = address_send_letter;//フォームに入力したメールアドレスの文字数
 
+
+            if ((letter_1 + letter_2) < letter_3) {
+                alert("【送信不可】送信先メールアドレスは" + letter_1 + "文字以内で入力してください");
+                return false;
+            } else {
+                return true;
+            }
+        }
         function changeDisabled0() {//ラジオボタン「日付指定」が選択されると、送信予定日の入力を必須化するための関数
             if (document.form1["rep"][0].checked) {
                 document.form1["rep_no_date"].required = true;
@@ -57,13 +70,42 @@
         }
 
 
+        // function check(obj) {//変数ファイルで管理している文字数制限を超えたとき、アラートを表示するための関数
+        //     max_letter = 0;
+        //     text = null;
+        //     switch (obj) {
+        //         case 'adra':
+        //             text = '送信元メールアドレス';
+        //             max_letter = <?php echo $max_adress; ?>;
+        //             break;
+        //         case 'adrb':
+        //             text = '送信先メールアドレス';
+        //             max_letter = <?php echo $max_adress_send; ?>;
+        //             break;
+        //         case 'subject':
+        //             text = '件名';
+        //             max_letter = <?php echo $max_subject; ?>;
+        //             break;
+        //         case 'tx':
+        //             text = '本文';
+        //             max_letter = <?php echo $max_body; ?>;
+        //             break;
+        //     }
+
+        //     txt = document.form1[obj].value;
+        //     n = txt.length;
+        //     if (n >= max_letter) {
+        //         alert(text + "は「" + max_letter + "」文字以下でお願いいたします");
+        //     }
+        // }
         function check(obj) {//変数ファイルで管理している文字数制限を超えたとき、アラートを表示するための関数
+            str = ",";//コンマは文字数に含まない
             max_letter = 0;
             text = null;
             switch (obj) {
                 case 'adra':
                     text = '送信元メールアドレス';
-                    max_letter = <?php echo $max_adress; ?>;
+                    max_letter = <?php echo $max_adress; ?>;//メールアドレスの最大文字数を代入
                     break;
                 case 'adrb':
                     text = '送信先メールアドレス';
@@ -79,9 +121,15 @@
                     break;
             }
 
-            txt = document.form1[obj].value;
-            n = txt.length;
-            if (n >= max_letter) {
+            txt = document.form1[obj].value;//入力したメールアドレス、件名、本文を取得
+            n = txt.length;//文字数に変換
+            address_send_letter = document.form1.adrb.value.length;
+            let modStr = '' //カット後の文字列
+
+            count = ( txt.match( new RegExp( str, "g" ) ) || [] ).length ;//入力した内容からコンマの数を取得
+            
+        
+            if (n - count >= max_letter) {
                 alert(text + "は「" + max_letter + "」文字以下でお願いいたします");
             }
         }
@@ -92,8 +140,10 @@
             check_tx = document.form1.tx.value;
 
             if (!check_suj.match(/\S/g) || !check_tx.match(/\S/g)) {
-                alert("文字を入力してください");
+                alert("【送信不可】文字を入力してください");
                 return false;
+            } else {
+                return true;
             }
         }
         function del() {//メール内容確認画面から「削除」ボタンを押下したときに表示
@@ -107,6 +157,7 @@
 
 
         window.onload = function() {//index.phpを開いたときに表示する要素（HTML）、表示しない要素(HTML)を指定
+            document.getElementById("adress_bcc").style.display = "none";
             document.getElementById("date_no").style.display="block";
             document.getElementById("date_yes").style.display="none";
             document.getElementById("check_container").style.display="none";
@@ -253,15 +304,24 @@
                 input_message = week_day +"曜日に送信します";
                 document.getElementById("output_message3").innerHTML = input_message;
         }
+        function open_bcc() {
+            document.getElementById("bcc").style.display = "none";
+            document.getElementById("adress_bcc").style.display = "block";
+            
+        }
+        function close_bcc() {
+            document.getElementById("bcc").style.display = "block";
+            document.getElementById("adress_bcc").style.display = "none";
+        }
     </script>
     <?php 
-        function dbin($adra, $adrb, $subj, $tx, $date, $rep_yes_period_list = null, $rep_yes_period_list_w = null) {
+        function dbin($adra, $adrb, $subj, $tx, $date, $rep_yes_period_list = null, $rep_yes_period_list_w = null, $add_bcc) {
             try {
                 global $dsn, $user, $password;//グローバル変数を宣言
 
                 $db = new PDO($dsn, $user, $password);
                 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-                $sql = "INSERT INTO mail (adressA,adressB,subject,text,date,period,week) VALUES (:adressA, :adressB, :sbj, :tx, :date, :period, :week)";
+                $sql = "INSERT INTO mail (adressA,adressB,subject,text,date,period,week,address_bcc) VALUES (:adressA, :adressB, :sbj, :tx, :date, :period, :week, :address_bcc)";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':adressA', $adra, PDO::PARAM_STR);
                 $stmt->bindParam(':adressB', $adrb, PDO::PARAM_STR);
@@ -270,19 +330,20 @@
                 $stmt->bindParam(':date', $date, PDO::PARAM_STR);
                 $stmt->bindParam(':period', $rep_yes_period_list, PDO::PARAM_STR);
                 $stmt->bindParam(':week', $rep_yes_period_list_w, PDO::PARAM_STR);
+                $stmt->bindParam(':address_bcc', $add_bcc, PDO::PARAM_STR);
                 $stmt->execute();
             } catch (PDOException $error) {
                 echo "error" . $error->getMessage();
             }
         }
-        function dbinUpd($adra, $adrb, $subj, $tx, $date, $id = null, $rep_yes_period_list = null, $rep_yes_period_list_w = null) {
+        function dbinUpd($adra, $adrb, $subj, $tx, $date, $id = null, $rep_yes_period_list = null, $rep_yes_period_list_w = null, $add_bcc) {
                     try {
                         global $dsn, $user, $password;//グローバル変数を宣言
                         
                         $db = new PDO($dsn, $user, $password);
                         $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
                         $sql = "UPDATE mail 
-                                 SET adressa = :adressA, adressb = :adressB, subject = :sbj, text = :tx, date = :date, period = :period, week = :week
+                                 SET adressa = :adressA, adressb = :adressB, subject = :sbj, text = :tx, date = :date, period = :period, week = :week, address_bcc = :address_bcc
                                  WHERE id = :id ";
                         $stmt = $db->prepare($sql);
                         $stmt->bindParam(':adressA', $adra, PDO::PARAM_STR);
@@ -293,6 +354,7 @@
                         $stmt->bindParam(':period', $rep_yes_period_list, PDO::PARAM_STR);
                         $stmt->bindParam(':week', $rep_yes_period_list_w, PDO::PARAM_STR);
                         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+                        $stmt->bindParam(':address_bcc', $add_bcc, PDO::PARAM_STR);
                         $stmt->execute();
                       } catch (PDOException $error) {
                         echo "error" . $error->getMessage();

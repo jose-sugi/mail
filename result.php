@@ -47,6 +47,11 @@
                 } else {
                     $adrb = null;
                 }
+                if (!empty($_POST['adress_bcc'])) {
+                    $add_bcc = $_POST['adress_bcc'];
+                } else {
+                    $add_bcc = null;
+                }
                 if (!empty($_POST['subject'])) {//件名
                     $subj = $_POST['subject'];
                 } else {
@@ -141,23 +146,22 @@
                 $case1 = $rep == 'no' && $date == $today && $time_cron < $time_today;//繰り返し設定無し + 本日送信予定 + クーロン設定時間より遅いとき（送信予約できない）
                 $case2 = $rep == 'yes' && $date == $today && $time_cron < $time_today;//繰り返し機能あり + 本日送信予定 + クーロン設定時間よりも遅いとき（本日の送信はできないが、翌日以降の繰り返し予約は可能）
 
-
                 if ($case1) {
                     //処理なし
                 } else if ($delete == "yes") {
                     //処理なし
                 } else if ($upd == "yes") {
-                    dbinUpd($adra, $adrb, $subj, $tx, $date, $id, $rep_yes_period_list, $rep_yes_period_list_w);
+                    dbinUpd($adra, $adrb, $subj, $tx, $date, $id, $rep_yes_period_list, $rep_yes_period_list_w, $add_bcc);
                 } else {
-                    dbin($adra, $adrb, $subj, $tx, $date, $rep_yes_period_list, $rep_yes_period_list_w);
+                    dbin($adra, $adrb, $subj, $tx, $date, $rep_yes_period_list, $rep_yes_period_list_w, $add_bcc);
                 }
-
+                
                 ?>
 
                 <div class="container">
                     <?php if ($delete == "yes") :?>
                         <p class="title send"><span>メールを削除しました</span></p>
-                    <?php elseif ($upd == "yes") : ?><!-- メール内容変更画面から遷移してくるとき表示 -->
+                    <?php elseif ($upd == "yes" && $date !== $today) : ?><!-- メール内容変更画面から遷移してくるとき表示 -->
                         <p class="title send"><span>メール内容を変更しました</span></p>
                     <?php elseif ($case1) : ?><!-- 繰り返し設定無し + 本日送信予定 + クーロン設定時間より遅いとき送信予約できない -->
                         <p class="title send"><span>送信予約できませんでした</span></p>
@@ -171,7 +175,7 @@
                     <a href="index.php" class="btn left">メールを送信</a>
                     <a href="list.php" class="btn right">送信予定</a>
                 </div>
-        <?php elseif ($functionFlag_edit): //「変更・削除機能」のフラグがオンのとき?>
+        <?php elseif ($functionFlag_edit): //「変更・削除機能」のフラグがオフのとき?>
         <?php
             if($spe == "no") {//ラジオボタンで「日付指定なし」が選択されていれば、自動で本日送信（「日付指定あり」に誤って入力していた時の対策）
                 $date = $today;
@@ -180,9 +184,9 @@
             if ($spe == "no" && $time_cron < $time_today) { //「変更」ボタンからメール内容変更したら、そのメール内容を更新
                 //処理なし
             } else if ($upd == "yes") {
-                dbinUpd($adra, $adrb, $subj, $tx, $date, $id);
+                dbinUpd($adra, $adrb, $subj, $tx, $date, $id, $add_bcc, $add_bcc);
             } else {
-                dbin($adra, $adrb, $subj, $tx, $date, $rep_yes_period_list, $rep_yes_period_list_w);
+                dbin($adra, $adrb, $subj, $tx, $date, $rep_yes_period_list, $rep_yes_period_list_w, $add_bcc, $add_bcc);
             }
         ?>
         <div class="container">
@@ -207,7 +211,7 @@
             }
 
             if (!($spe == "no" && $time_cron < $time_today)) {
-                dbin($adra, $adrb, $subj, $tx, $date);
+                dbin($adra, $adrb, $subj, $tx, $date, $add_bcc, $add_bcc);
             } 
             ?>
             <div class="container">

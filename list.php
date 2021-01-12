@@ -98,7 +98,7 @@
                 <?php if ($date[$i] !== null) ://「繰り返し送信機能」のフラグをfalseにしたときに繰り返し予約メールを表示しない（unset()では削除したが配列として前に詰められていないので必要）?>
                     <form name="<?php echo 'form' . $n; ?>" method="POST" action="check.php"><!--取り出したデータをaタグで一覧表示させ、それぞれにidの値を持たせる-->
                         <?php if (strpos($adressb[$i], ',') === false) { ?>
-                            <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><span class="list_data"><?php echo $flag[$i]; ?></span><span class="list_ad"><?php echo $adressb[$i];?></span><span class="list_subj"><?php echo $subj[$i]; ?></span></a></li>
+                            <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><span class="list_data"><?php echo $flag[$i]; ?></span><span class="list_ad" max-length="2"><?php echo $adressb[$i];?></span><span class="list_subj"><?php echo $subj[$i]; ?></span></a></li>
                         <?php } else { ?>
                             <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><span class="list_data"><?php echo $flag[$i]; ?></span><span class="list_ad"><?php echo $adrcou ."名同時送信";?></span><span class="list_subj"><?php echo $subj[$i]; ?></span></a></li>
                         <?php } ?>
