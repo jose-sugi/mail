@@ -14,7 +14,6 @@
     */
   include(dirname(__FILE__).'/variable.php');
   $weekday = date("w") + 1;
-  //global $adressb, $subj, $text, $adressa;
 
   try {
     $db = new PDO($dsn, $user, $password);
@@ -29,8 +28,8 @@
   // SQLより取り出したデータを配列に格納
   $data = $stmt->fetchAll();
   $id = array_column($data, 'id');
-  $adressa = array_column($data, 'adressa');
-  $adressb = array_column($data, 'adressb');
+  $addressa = array_column($data, 'addressa');
+  $addressb = array_column($data, 'addressb');
   $address_bcc = array_column($data, 'address_bcc');
   $subj = array_column($data, 'subject');
   $text = array_column($data, 'text');
@@ -46,23 +45,23 @@
     echo "No,".$i."<br>";
     if ($date[$i] == $today && $period[$i] == null) {//本日の日付指定で「繰り返し送信」出ないものは送信
       echo "日付が同じで繰り返しなし".$id[$i].$date[$i].$subj[$i].$period[$i].$text[$i].'<br>';
-      send_mail($adressb[$i], $subj[$i], $text[$i], $adressa[$i], $address_bcc[$i]);
+      send_mail($addressb[$i], $subj[$i], $text[$i], $addressa[$i], $address_bcc[$i]);
     } else if ($period[$i] == "Y" && substr($date[$i],5,5) == substr($today,5,5) && $date[$i] <= $today) {
     //「毎年」送信指定かつ、今日の月日と繰り返し指定日付が同じメールかつ、今日よりも送信開始日が前のメールは送信
       echo "毎年送信".$id[$i].$date[$i].$subj[$i].$period[$i].$text[$i].'<br>';
-      send_mail($adressb[$i], $subj[$i], $text[$i], $adressa[$i], $address_bcc[$i]);
+      send_mail($addressb[$i], $subj[$i], $text[$i], $addressa[$i], $address_bcc[$i]);
     } else if ($period[$i] == "M" && substr($date[$i],8,2) == substr($today,8,2) && $date[$i] <= $today) {
       //「毎月」送信指定かつ、今日の日と繰り返し指定日付が同じメールかつ、今日よりも送信開始日が前のメールは送信
       echo "毎月送信".$id[$i].$date[$i].$subj[$i].$period[$i].$text[$i].'<br>';
-      send_mail($adressb[$i], $subj[$i], $text[$i], $adressa[$i], $address_bcc[$i]);
+      send_mail($addressb[$i], $subj[$i], $text[$i], $addressa[$i], $address_bcc[$i]);
     } else if ($period[$i] == "W" && $week[$i] == $weekday && $date[$i] <= $today) {
       //「毎週」送信指定かつ、今日の曜日と繰り返し指定曜日が同じメールかつ、今日よりも送信開始日が前のメールは送信
       echo "毎週送信".$id[$i].$date[$i].$subj[$i].$period[$i].$text[$i].'<br>';
-      send_mail($adressb[$i], $subj[$i], $text[$i], $adressa[$i], $address_bcc[$i]);
+      send_mail($addressb[$i], $subj[$i], $text[$i], $addressa[$i], $address_bcc[$i]);
     } else if ($period[$i] == "D" && $date[$i] <= $today) {
       //「毎日」送信指定かつ、今日よりも送信開始日が前のメールは送信
       echo "毎日送信".$id[$i].$date[$i].$subj[$i].$period[$i].$text[$i].'<br>';
-      send_mail($adressb[$i], $subj[$i], $text[$i], $adressa[$i], $address_bcc[$i]);
+      send_mail($addressb[$i], $subj[$i], $text[$i], $addressa[$i], $address_bcc[$i]);
     } else {
       //上記5つに当てはまらない場合（繰り返し送信「毎週月曜日」で今日を送信開始日にしているが、今日は月曜日出ないメールや、繰り返し送信「毎年」で今日の日付ではあるが、送信開始日が来年の今日からの場合など）は送信しない
       echo "今日は送信しない".$id[$i].$date[$i].$subj[$i].$period[$i].$text[$i].'<br>';
@@ -70,12 +69,12 @@
     }
   }
 
-function send_mail($adressb, $subj, $text, $adressa, $address_bcc) {
+function send_mail($addressb, $subj, $text, $addressa, $address_bcc) {
    //配列に格納したデータが全てメール送信されるよう設定
-    $to = $adressb;
+    $to = $addressb;
     $subject = $subj;
     $message = $text;
-    $headers = "From:" .$adressa;
+    $headers = "From:" .$addressa;
     $headers.="\n";
     $headers.="Bcc:" .$address_bcc;
 

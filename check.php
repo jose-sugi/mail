@@ -39,8 +39,8 @@
     // SQLより取り出したデータを配列に格納
           $data = $stmt->fetchAll();
           $id = array_column($data, 'id');
-          $adressa = array_column($data, 'adressa');
-          $adressb = array_column($data, 'adressb');
+          $addressa = array_column($data, 'addressa');
+          $addressb = array_column($data, 'addressb');
           $address_bcc = array_column($data, 'address_bcc');
           $subj = array_column($data, 'subject');
           $text = array_column($data, 'text');
@@ -79,13 +79,13 @@
     <div class="mail_main maincolor">
         <p class="top">送信予定メール確認</p>
         <button onclick="history.back()" class="batsu">✕</button>
-        <div class="mail recieve_adress">
-            <p>宛先：<?php echo $adressb[0];?></p>
+        <div class="mail recieve_address">
+            <p>宛先：<?php echo $addressb[0];?></p>
             <?php if ($address_bcc !== null) :?>
               <p>BCC：<?php echo $address_bcc[0]; ?></p>
             <?php endif; ?>
         </div>
-        <div class="mail send_adress">
+        <div class="mail send_address">
             <p>件名：<?php echo $subj[0]; ?></p>
         </div>
         <div class="mail mailbody">

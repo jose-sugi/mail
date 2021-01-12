@@ -41,7 +41,7 @@
             }
         }
         function check_count() {
-            letter_1 = <?php echo $max_adress_send; ?>;//関数ファイルで設定した「送信先メールアドレス」の最大文字数
+            letter_1 = <?php echo $max_address_send; ?>;//関数ファイルで設定した「送信先メールアドレス」の最大文字数
             letter_2 = count;//フォームに入力した送信先メールアドレスに含まれる、カンマ「,」の数
             letter_3 = address_send_letter;//フォームに入力したメールアドレスの文字数
 
@@ -69,35 +69,6 @@
             }
         }
 
-
-        // function check(obj) {//変数ファイルで管理している文字数制限を超えたとき、アラートを表示するための関数
-        //     max_letter = 0;
-        //     text = null;
-        //     switch (obj) {
-        //         case 'adra':
-        //             text = '送信元メールアドレス';
-        //             max_letter = <?php echo $max_adress; ?>;
-        //             break;
-        //         case 'adrb':
-        //             text = '送信先メールアドレス';
-        //             max_letter = <?php echo $max_adress_send; ?>;
-        //             break;
-        //         case 'subject':
-        //             text = '件名';
-        //             max_letter = <?php echo $max_subject; ?>;
-        //             break;
-        //         case 'tx':
-        //             text = '本文';
-        //             max_letter = <?php echo $max_body; ?>;
-        //             break;
-        //     }
-
-        //     txt = document.form1[obj].value;
-        //     n = txt.length;
-        //     if (n >= max_letter) {
-        //         alert(text + "は「" + max_letter + "」文字以下でお願いいたします");
-        //     }
-        // }
         function check(obj) {//変数ファイルで管理している文字数制限を超えたとき、アラートを表示するための関数
             str = ",";//コンマは文字数に含まない
             max_letter = 0;
@@ -105,11 +76,11 @@
             switch (obj) {
                 case 'adra':
                     text = '送信元メールアドレス';
-                    max_letter = <?php echo $max_adress; ?>;//メールアドレスの最大文字数を代入
+                    max_letter = <?php echo $max_address; ?>;//メールアドレスの最大文字数を代入
                     break;
                 case 'adrb':
                     text = '送信先メールアドレス';
-                    max_letter = <?php echo $max_adress_send; ?>;
+                    max_letter = <?php echo $max_address_send; ?>;
                     break;
                 case 'subject':
                     text = '件名';
@@ -157,7 +128,7 @@
 
 
         window.onload = function() {//index.phpを開いたときに表示する要素（HTML）、表示しない要素(HTML)を指定
-            document.getElementById("adress_bcc").style.display = "none";
+            document.getElementById("address_bcc").style.display = "none";
             document.getElementById("date_no").style.display="block";
             document.getElementById("date_yes").style.display="none";
             document.getElementById("check_container").style.display="none";
@@ -165,7 +136,7 @@
             document.form1["rep_no_date"].required = true;
             document.getElementById("message_container").style.display="none";
         }
-
+        
         function hyoji(num){
           if (num == 0) {//「日時指定」をラジオボタンでボタン選択したとき、表示する要素（HTML）表示しない要素(HTML)を指定
             document.getElementById("date_no").style.display="block";
@@ -306,12 +277,12 @@
         }
         function open_bcc() {
             document.getElementById("bcc").style.display = "none";
-            document.getElementById("adress_bcc").style.display = "block";
+            document.getElementById("address_bcc").style.display = "block";
             
         }
         function close_bcc() {
             document.getElementById("bcc").style.display = "block";
-            document.getElementById("adress_bcc").style.display = "none";
+            document.getElementById("address_bcc").style.display = "none";
         }
     </script>
     <?php 
@@ -321,10 +292,10 @@
 
                 $db = new PDO($dsn, $user, $password);
                 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-                $sql = "INSERT INTO mail (adressA,adressB,subject,text,date,period,week,address_bcc) VALUES (:adressA, :adressB, :sbj, :tx, :date, :period, :week, :address_bcc)";
+                $sql = "INSERT INTO mail (addressA,addressB,subject,text,date,period,week,address_bcc) VALUES (:addressA, :addressB, :sbj, :tx, :date, :period, :week, :address_bcc)";
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam(':adressA', $adra, PDO::PARAM_STR);
-                $stmt->bindParam(':adressB', $adrb, PDO::PARAM_STR);
+                $stmt->bindParam(':addressA', $adra, PDO::PARAM_STR);
+                $stmt->bindParam(':addressB', $adrb, PDO::PARAM_STR);
                 $stmt->bindParam(':sbj', $subj, PDO::PARAM_STR);
                 $stmt->bindParam(':tx', $tx, PDO::PARAM_STR);
                 $stmt->bindParam(':date', $date, PDO::PARAM_STR);
@@ -343,11 +314,11 @@
                         $db = new PDO($dsn, $user, $password);
                         $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
                         $sql = "UPDATE mail 
-                                 SET adressa = :adressA, adressb = :adressB, subject = :sbj, text = :tx, date = :date, period = :period, week = :week, address_bcc = :address_bcc
+                                 SET addressa = :addressA, addressb = :addressB, subject = :sbj, text = :tx, date = :date, period = :period, week = :week, address_bcc = :address_bcc
                                  WHERE id = :id ";
                         $stmt = $db->prepare($sql);
-                        $stmt->bindParam(':adressA', $adra, PDO::PARAM_STR);
-                        $stmt->bindParam(':adressB', $adrb, PDO::PARAM_STR);
+                        $stmt->bindParam(':addressA', $adra, PDO::PARAM_STR);
+                        $stmt->bindParam(':addressB', $adrb, PDO::PARAM_STR);
                         $stmt->bindParam(':sbj', $subj, PDO::PARAM_STR);
                         $stmt->bindParam(':tx', $tx, PDO::PARAM_STR);
                         $stmt->bindParam(':date', $date, PDO::PARAM_STR);

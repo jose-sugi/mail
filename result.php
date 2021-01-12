@@ -47,8 +47,8 @@
                 } else {
                     $adrb = null;
                 }
-                if (!empty($_POST['adress_bcc'])) {
-                    $add_bcc = $_POST['adress_bcc'];
+                if (!empty($_POST['address_bcc'])) {
+                    $add_bcc = $_POST['address_bcc'];
                 } else {
                     $add_bcc = null;
                 }

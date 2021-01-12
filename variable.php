@@ -11,17 +11,21 @@
 
     $time_cron = '12:30';//クーロン時間の設定
     
-    $max_adress = 255;//送信元の文字数
-    $max_adress_send = 255;//送信先の文字数
+    $max_address = 255;//送信元の文字数
+    $max_address_send = 255;//送信先の文字数
     $max_subject =255;//件名の文字数
     $max_body = 1000;//本文の文字数
 
-    $functionFlag_edit = false;
+    $functionFlag_edit = true;
     $functionFlag_repeat = true;
 
-    $dsn = 'mysql:dbname=LAA1192052-sugisawa01;host=mysql145.phy.lolipop.lan;charset=utf8'; //MySQLのデータソース名
-    $user = 'LAA1192052'; //ユーザー名
-    $password = 'AcroLoliPass2020'; //パスワード
+    //$dsn = 'mysql:dbname=LAA1192052-sugisawa01;host=mysql145.phy.lolipop.lan;charset=utf8';//MySQLのデータソース名
+    //$user = 'LAA1192052';//ユーザー名
+    //$password = 'AcroLoliPass2020';//パスワード
+
+    $dsn = 'mysql:host=localhost;dbname=mailtest';
+	$user = 'root';
+	$password = 'root';
 
     date_default_timezone_set('Asia/Tokyo');
     $today = date('Y-m-d');//今日の日付
@@ -33,6 +37,6 @@
     　　　　　　　　　　　　 機能追加時に「00」初期化
     */
     $major = 2;
-    $minor = 0.00;
+    $minor = 0.02;
     $version = $major + $minor;
  ?>
