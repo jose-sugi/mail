@@ -47,8 +47,8 @@
     // SQLより取り出したデータを配列に格納
           $data = $stmt->fetchAll();
           $id = array_column($data, 'id');
-          $addressa = array_column($data, 'addressa');
-          $addressb = array_column($data, 'addressb');
+          $address_receive = array_column($data, 'address_receive');
+          $address_send = array_column($data, 'address_send');
           $subj = array_column($data, 'subject');
           $text = array_column($data, 'text');
           $date = array_column($data, 'date');
@@ -61,10 +61,10 @@
         <!-- 入力データをanswer.phpに送信 -->
         <form method="POST" action="result.php" name="form1" onsubmit="return !!(check_empty() && check_count())">
             <div class="mail recieve_address">
-                <input type="email" id="adra" name="adra" size="40" value="<?php echo $addressa[0]; ?>" placeholder="メールアドレス" maxlength='<?php echo $max_address; ?>' onChange="check(this.name)" required>
+                <input type="email" id="adra" name="adra" size="40" value="<?php echo $address_receive[0]; ?>" placeholder="メールアドレス" maxlength='<?php echo $max_address; ?>' onChange="check(this.name)" required>
             </div>
             <div class="mail send_address">
-                <input type="email" name="adrb" rows="4" cols="40" value="<?php echo $addressb[0]; ?>" placeholder="宛先　　※複数の場合は「,」で区切る" maxlength='<?php echo $max_address_send; ?>' onChange="check(this.name)" required multiple></input>
+                <input type="email" name="adrb" rows="4" cols="40" value="<?php echo $address_send[0]; ?>" placeholder="宛先　　※複数の場合は「,」で区切る" maxlength='<?php echo $max_address_send; ?>' onChange="check(this.name)" required multiple></input>
                 <button type="button" id="bcc" onclick="open_bcc();">BCC</button>
                 <input type="email" id="address_bcc" name="address_bcc" placeholder="BCC　　※複数の場合は「,」で区切る" multiple></input>
             </div>

@@ -292,10 +292,10 @@
 
                 $db = new PDO($dsn, $user, $password);
                 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-                $sql = "INSERT INTO mail (addressA,addressB,subject,text,date,period,week,address_bcc) VALUES (:addressA, :addressB, :sbj, :tx, :date, :period, :week, :address_bcc)";
+                $sql = "INSERT INTO mail (address_receive,address_send,subject,text,date,period,week,address_bcc) VALUES (:address_receive, :address_send, :sbj, :tx, :date, :period, :week, :address_bcc)";
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam(':addressA', $adra, PDO::PARAM_STR);
-                $stmt->bindParam(':addressB', $adrb, PDO::PARAM_STR);
+                $stmt->bindParam(':address_receive', $adra, PDO::PARAM_STR);
+                $stmt->bindParam(':address_send', $adrb, PDO::PARAM_STR);
                 $stmt->bindParam(':sbj', $subj, PDO::PARAM_STR);
                 $stmt->bindParam(':tx', $tx, PDO::PARAM_STR);
                 $stmt->bindParam(':date', $date, PDO::PARAM_STR);
@@ -314,11 +314,11 @@
                         $db = new PDO($dsn, $user, $password);
                         $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
                         $sql = "UPDATE mail 
-                                 SET addressa = :addressA, addressb = :addressB, subject = :sbj, text = :tx, date = :date, period = :period, week = :week, address_bcc = :address_bcc
+                                 SET address_receive = :address_receive, address_send = :address_send, subject = :sbj, text = :tx, date = :date, period = :period, week = :week, address_bcc = :address_bcc
                                  WHERE id = :id ";
                         $stmt = $db->prepare($sql);
-                        $stmt->bindParam(':addressA', $adra, PDO::PARAM_STR);
-                        $stmt->bindParam(':addressB', $adrb, PDO::PARAM_STR);
+                        $stmt->bindParam(':address_receive', $adra, PDO::PARAM_STR);
+                        $stmt->bindParam(':address_send', $adrb, PDO::PARAM_STR);
                         $stmt->bindParam(':sbj', $subj, PDO::PARAM_STR);
                         $stmt->bindParam(':tx', $tx, PDO::PARAM_STR);
                         $stmt->bindParam(':date', $date, PDO::PARAM_STR);

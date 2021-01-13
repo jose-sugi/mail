@@ -40,8 +40,8 @@
         // SQLより取り出したデータを配列に格納
           $data = $stmt->fetchAll();
           $id = array_column($data, 'id');
-          $addressa = array_column($data, 'addressa');
-          $addressb = array_column($data, 'addressb');
+          $address_receive = array_column($data, 'address_receive');
+          $address_send = array_column($data, 'address_send');
           $subj = array_column($data, 'subject');
           $text = array_column($data, 'text');
           $date = array_column($data, 'date');
@@ -94,11 +94,11 @@
         <?php $n = 0; ?>
         <ul>
             <?php for ($i = 0; $i < count($id); $i++) : ?>
-                <?php $adrcou = substr_count($addressb[$i], ",") + 1;//複数名に送信するとき「A,B,・・・」とコンマで区切るので、コンマの数を数えて送信人数を判断 ?>
+                <?php $adrcou = substr_count($address_send[$i], ",") + 1;//複数名に送信するとき「A,B,・・・」とコンマで区切るので、コンマの数を数えて送信人数を判断 ?>
                 <?php if ($date[$i] !== null) ://「繰り返し送信機能」のフラグをfalseにしたときに繰り返し予約メールを表示しない（unset()では削除したが配列として前に詰められていないので必要）?>
                     <form name="<?php echo 'form' . $n; ?>" method="POST" action="check.php"><!--取り出したデータをaタグで一覧表示させ、それぞれにidの値を持たせる-->
-                        <?php if (strpos($addressb[$i], ',') === false) { ?>
-                            <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><span class="list_date" id="list_date"><?php echo $flag[$i]; ?></span><span class="list_ad" max-length="2"><?php echo $addressb[$i];?></span><span class="list_subj"><?php echo $subj[$i]; ?></span></a></li>
+                        <?php if (strpos($address_send[$i], ',') === false) { ?>
+                            <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><span class="list_date" id="list_date"><?php echo $flag[$i]; ?></span><span class="list_ad" max-length="2"><?php echo $address_send[$i];?></span><span class="list_subj"><?php echo $subj[$i]; ?></span></a></li>
                         <?php } else { ?>
                             <li><a href="javascript:document.<?php echo 'form' . $n; ?>.submit()"><span class="list_date"><?php echo $flag[$i]; ?></span><span class="list_ad"><?php echo $adrcou ."名同時送信";?></span><span class="list_subj"><?php echo $subj[$i]; ?></span></a></li>
                         <?php } ?>
